@@ -1,0 +1,4 @@
+#!/bin/bash
+source ./sh/_setup
+
+docker-compose exec $1 sh

@@ -1,0 +1,8 @@
+#!/bin/bash
+source ./sh/_setup
+
+if [ $# -eq 0 ]; then
+    docker-compose exec postgres psql -U $DB_USER
+else
+    docker-compose exec postgres psql -U $DB_USER -c "$1"
+fi

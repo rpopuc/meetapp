@@ -1,0 +1,8 @@
+#!/bin/bash
+source ./sh/_setup
+
+if [ $# -eq 0 ]; then
+    docker-compose exec app sh
+else
+    docker-compose exec --user $1 app sh
+fi

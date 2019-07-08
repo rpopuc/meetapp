@@ -1,0 +1,5 @@
+#!/bin/bash
+source ./sh/_setup
+
+params=$@
+docker-compose exec app sh -c "yarn $params"

@@ -1,0 +1,6 @@
+#!/bin/bash
+source ./sh/_setup
+
+params=$@
+docker-compose down
+docker-compose up -d $params

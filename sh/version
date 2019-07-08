@@ -1,0 +1,13 @@
+#!/bin/bash
+source ./sh/_setup
+
+params=$@
+node=`docker-compose exec app sh -c "node --version"`
+npm=`docker-compose exec app sh -c "npm --version"`
+yarn=`docker-compose exec app sh -c "yarn --version"`
+postgres=`docker-compose exec postgres sh -c "postgres --version"`
+
+echo 'Node:' $node
+echo 'NPM:' $npm
+echo 'Yarn:' $yarn
+echo 'Postgres:' $postgres
