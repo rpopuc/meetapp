@@ -5,6 +5,7 @@ import multerConfig from './config/multer';
 import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
+import MeetupController from './app/controllers/MeetupController';
 
 // Obtém o middleware de autenticação
 import authMiddleware from './app/middlewares/auth';
@@ -27,5 +28,9 @@ routes.put('/users', authMiddleware, UserController.update);
 // Upload de arquivos
 const upload = multer(multerConfig);
 routes.post('/files', authMiddleware, upload.single('file'), FileController.store);
+
+routes.post('/meetups', authMiddleware, MeetupController.store);
+
+
 
 export default routes;
