@@ -19,6 +19,7 @@ class MeetupController {
       description: Yup.string(),
       location: Yup.string().required(),
       date: Yup.date().required(),
+      banner_id: Yup.number().integer()
     });
 
     // Verifica se as regras de validação foram obedecidas
@@ -34,6 +35,7 @@ class MeetupController {
       location,
       date,
       user_id: req.userId,
+      banner_id: req.body.banner_id,
     }
 
     // Efetua o registro dos dados na base
