@@ -9,8 +9,7 @@ import Meetup from '../models/Meetup';
  */
 class MeetupController {
   /**
-   * Efetua o login na aplicação
-   * Retorna o token JWT de autenticação
+   * Registra um meetup do usuário logado
    */
   async store(req, res) {
     // Define as regras de validação dos dados de entrada
@@ -49,6 +48,31 @@ class MeetupController {
       location,
       date
     });
+  }
+
+  /**
+   * Lista os meetups do usuário logado
+   */
+  async index(req, res) {
+    const { page = 1 } = req.query;
+
+    const meetups = await Meetup.findAll({
+      where: {
+        user_id: req.userId,
+      },
+      attributes: [
+        'id',
+        'date',
+        'title',
+        'description',
+        'location'
+      ],
+      limit: 20,
+      offset: (page - 1) * 20,
+      order: ['date'],
+    });
+
+    return res.json(meetups);
   }
 }
 

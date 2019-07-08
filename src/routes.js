@@ -29,7 +29,13 @@ routes.put('/users', authMiddleware, UserController.update);
 const upload = multer(multerConfig);
 routes.post('/files', authMiddleware, upload.single('file'), FileController.store);
 
+//---------------------------------------------------------- Meetups
+
+// Registro de meetup
 routes.post('/meetups', authMiddleware, MeetupController.store);
+
+// Listagem de meetups
+routes.get('/meetups', authMiddleware, MeetupController.index);
 
 
 
