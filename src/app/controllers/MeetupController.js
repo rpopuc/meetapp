@@ -18,17 +18,18 @@ class MeetupController {
       title: Yup.string().required(),
       description: Yup.string(),
       location: Yup.string().required(),
-      date: Yup.date().required(),
+      date: Yup.date().required().min(new Date(), 'Past dates are not permitted'),
       banner_id: Yup.number().integer()
     });
 
     // Verifica se as regras de validação foram obedecidas
-    if (!(await schema.isValid(req.body))) {
-      return res.status(400).json({ error: 'Validation fails' });
+    try {
+      await schema.validate(req.body);
+    } catch (error) {
+      return res.status(400).json({error: error.message});
     }
 
     const { title, description, location, date } = req.body;
-
     const meetupData = {
       title,
       description,
