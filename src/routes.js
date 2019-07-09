@@ -6,6 +6,7 @@ import UserController from './app/controllers/UserController';
 import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
 import MeetupController from './app/controllers/MeetupController';
+import SubscriptionController from './app/controllers/SubscriptionController';
 
 // Obtém o middleware de autenticação
 import authMiddleware from './app/middlewares/auth';
@@ -42,5 +43,8 @@ routes.delete('/meetups/:id', authMiddleware, MeetupController.delete);
 
 // Edição de meetup
 routes.put('/meetups/:id', authMiddleware, MeetupController.update);
+
+// Inscrição em um meetup
+routes.post('/meetups/:id/subscriptions', authMiddleware, SubscriptionController.store);
 
 export default routes;
