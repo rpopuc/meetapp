@@ -44,9 +44,7 @@ routes.delete('/meetups/:id', authMiddleware, MeetupController.delete);
 // Edição de meetup
 routes.put('/meetups/:id', authMiddleware, MeetupController.update);
 
-//---------------------------------------------------------- Subscriptions
-
 // Inscrição em um meetup
-routes.post('/subscriptions', authMiddleware, SubscriptionController.store);
+routes.post('/meetups/:id/subscriptions', authMiddleware, SubscriptionController.store);
 
 export default routes;

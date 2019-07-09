@@ -15,19 +15,7 @@ class SubscriptionController {
    * Registra uma inscrição em um meetup para o usuário logado
    */
   async store(req, res) {
-    // Define as regras de validação dos dados de entrada
-    const schema = Yup.object().shape({
-      meetup_id: Yup.number().integer().required(),
-    });
-
-    // Verifica se as regras de validação foram obedecidas
-    try {
-      await schema.validate(req.body);
-    } catch (error) {
-      return res.status(HttpStatus.BAD_REQUEST).json({error: error.message});
-    }
-
-    const meetup = await Meetup.findByPk(req.body.meetup_id)
+    const meetup = await Meetup.findByPk(req.params.id)
 
     if (! meetup) {
       return res.status(HttpStatus.NOT_FOUND).json({error: 'Meetup not found.'})

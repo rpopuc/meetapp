@@ -208,6 +208,17 @@ curl --request PUT \
     "title": "Meetup de Teste"
   }'
 ```
+---
+
+`POST`: `/meetups/:id/subscriptions`
+
+Inscreve o usuário ativo no meetup futuro.
+
+```
+curl --request POST \
+  --url http://localhost:3000/meetups/1/subscriptions \
+  --header 'authorization: Bearer <token>'
+```
 
 ## Desafio
 
