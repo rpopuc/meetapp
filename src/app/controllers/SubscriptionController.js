@@ -1,6 +1,6 @@
 // Importa a biblioteca de validação
-import * as Yup from 'yup';
 import {isBefore} from 'date-fns';
+import {Op} from 'sequelize';
 import HttpStatus from 'http-status-codes';
 
 // Importa o model do Meetup
@@ -14,6 +14,37 @@ import Queue from '../../lib/Queue';
  * Controller para gestão de inscrições em Meetups
  */
 class SubscriptionController {
+  /**
+   * Lista as inscrições do usuário logado
+   */
+  async index(req, res) {
+    const { page = 1 } = req.query;
+
+    const subscriptions = await Subscription.findAll({
+      where: {
+        user_id: req.userId,
+      },
+      include: [
+        {
+          model: Meetup,
+          where: {
+            date: {
+              [Op.gt]: new Date(),
+            },
+          },
+          required: true,
+        },
+      ],
+      order: [
+        [Meetup, 'date']
+      ],
+      limit: 20,
+      offset: (page - 1) * 20,
+    });
+
+    return res.json(subscriptions);
+  }
+
   /**
    * Registra uma inscrição em um meetup para o usuário logado
    */
