@@ -1,5 +1,6 @@
 // Importa a biblioteca de validação
 import * as Yup from 'yup';
+import {isBefore} from 'date-fns';
 
 // Importa o model do Meetup
 import Meetup from '../models/Meetup';
@@ -39,10 +40,11 @@ class MeetupController {
     }
 
     // Efetua o registro dos dados na base
-    await Meetup.create(meetupData);
+    const newMeetup = await Meetup.create(meetupData);
 
     // Retorna os dados do usuário recém criado
     return res.json({
+      id: newMeetup.id,
       title,
       description,
       location,
@@ -69,10 +71,35 @@ class MeetupController {
       ],
       limit: 20,
       offset: (page - 1) * 20,
-      order: ['date'],
+      order: [
+        ['date', 'DESC']
+      ],
     });
 
     return res.json(meetups);
+  }
+
+  /**
+   * Cancela o meetup
+   */
+  async delete(req, res) {
+    const meetup = await Meetup.findByPk(req.params.id);
+
+    if (!meetup) {
+      return res.status(404).json({error: 'Meetup not found.'})
+    }
+
+    if (meetup.user_id != req.userId) {
+      return res.status(401).json({error: 'Not authorized.'})
+    }
+
+    if (isBefore(meetup.date, new Date())) {
+      return res.status(400).json({ error: "Cancel past meetups is not permitted" });
+    }
+
+    await meetup.destroy;
+
+    return res.send({ok: true})
   }
 }
 

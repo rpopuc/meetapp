@@ -37,6 +37,9 @@ routes.post('/meetups', authMiddleware, MeetupController.store);
 // Listagem de meetups
 routes.get('/meetups', authMiddleware, MeetupController.index);
 
+// Cancelamento de meetups
+routes.delete('/meetups/:id', authMiddleware, MeetupController.delete);
+
 
 
 export default routes;
