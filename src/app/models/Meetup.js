@@ -24,8 +24,7 @@ class Meetup extends Model {
     });
 
     this.belongsTo(models.User, {
-      foreignKey: 'user_id',
-      as: 'user',
+      foreignKey: 'user_id'
     });
   }
 }

@@ -233,6 +233,18 @@ curl --request POST \
   --header 'authorization: Bearer <token>'
 ```
 
+---
+
+`GET`: `/meetups/search`
+
+Consulta os meetups registrados.
+
+```
+curl --request GET \
+  --url http://localhost:3000/meetups/search?date=<date>&page=<page> \
+  --header 'authorization: Bearer <token>'
+```
+
 ## Desafio
 
 Esse projeto é a realização do desafio proposto no curso **Rocketseat - Bootcamp GoStack 2019**.
