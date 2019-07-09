@@ -103,6 +103,8 @@ curl --request POST \
 }'
 ```
 
+---
+
 `POST` `/sessions`
 
 Efetua login
@@ -117,6 +119,8 @@ curl --request POST \
 }'
 ```
 
+---
+
 `PUT`: `/users`
 
 Atualiza os dados de um usuário
@@ -129,6 +133,64 @@ curl --request PUT \
   --data '{
 	  "name": "Full User Name"
   }'
+```
+
+---
+
+`POST`: `/files`
+
+Registra uma imagem.
+
+```
+curl --request POST \
+  --url http://localhost:3000/files \
+  --header 'authorization: Bearer <token>' \
+  --header 'content-type: multipart/form-data; boundary=---011000010111000001101001' \
+  --form file=
+```
+
+---
+
+`POST`: `/meetups`
+
+Registra um meetup
+
+```
+curl --request POST \
+  --url http://localhost:3000/meetups \
+  --header 'authorization: Bearer <token>' \
+  --header 'content-type: application/json' \
+  --data '{
+    "title": "Meetup de Exemplo",
+    "description": "Um meetup de exemplo",
+    "location": "Endereço do Meetup, 123",
+    "date": "2020-07-08T18:00:00-00:00",
+    "banner_id": 1
+  }'
+```
+
+---
+
+`GET`: `/meetups`
+
+Lista os meetups registrados para o usuário ativo.
+
+```
+curl --request GET \
+  --url http://localhost:3000/meetups \
+  --header 'authorization: Bearer <token>'
+```
+
+---
+
+`DELETE`: `/meetups/:id`
+
+Cancela um meetup futuro.
+
+```
+curl --request DELETE \
+  --url http://localhost:3000/meetups/1 \
+  --header 'authorization: Bearer <token>'
 ```
 
 ## Desafio
