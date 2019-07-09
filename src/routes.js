@@ -51,4 +51,7 @@ routes.post('/meetups/:id/subscriptions', authMiddleware, SubscriptionController
 // Consulta de Meetups
 routes.get('/meetups/search', authMiddleware, MeetupSearchController.index);
 
+// Listagem das inscrições do usuário
+routes.get('/subscriptions', authMiddleware, SubscriptionController.index);
+
 export default routes;
