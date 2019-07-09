@@ -29,6 +29,7 @@ O projeto possui uma configuração de *stack* Docker para executar a aplicaçã
 - Node
 - Yarn
 - Postgres
+- Redis
 
 Antes de iniciar a aplicação com ou sem a *stack*, deve-se criar o arquivo contendo as configurações, utiilzando-se do arquivo `.env.example` como exemplo:
 
@@ -65,6 +66,12 @@ O arquivo `.env` deve ser editado para conter valores válidos de configuração
 ./sh/logs
 ```
 
+### Para exibir os logs do processamento da fila
+
+```
+./sh/logs queue
+```
+
 
 ## Sem a stack Docker
 
@@ -84,6 +91,12 @@ yarn sequelize db:migrate
 
 ```
 yarn run dev
+```
+
+### Para executar o processo de fila
+
+```
+yarn queue
 ```
 
 ## API

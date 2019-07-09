@@ -5,7 +5,10 @@ import HttpStatus from 'http-status-codes';
 
 // Importa o model do Meetup
 import Subscription from '../models/Subscription';
+import User from '../models/User';
 import Meetup from '../models/Meetup';
+import SubscriptionMail from '../jobs/SubscriptionMail';
+import Queue from '../../lib/Queue';
 
 /**
  * Controller para gestão de inscrições em Meetups
@@ -15,7 +18,15 @@ class SubscriptionController {
    * Registra uma inscrição em um meetup para o usuário logado
    */
   async store(req, res) {
-    const meetup = await Meetup.findByPk(req.params.id)
+    const meetup = await Meetup.findByPk(req.params.id, {
+      include: [
+        {
+          model: User,
+          as: 'user',
+          attributes: ['id', 'name', 'email'],
+        },
+      ],
+    });
 
     if (! meetup) {
       return res.status(HttpStatus.NOT_FOUND).json({error: 'Meetup not found.'})
@@ -56,6 +67,15 @@ class SubscriptionController {
     const subscription = await Subscription.create({
       user_id: req.userId,
       meetup_id: meetup.id,
+    });
+
+    // Envia notificação de inscrição para
+    // o organizador do Meetup
+    await Queue.add(SubscriptionMail.key, {
+      subscription: {
+        user: await subscription.getUser(),
+        meetup,
+      },
     });
 
     // Retorna os dados do usuário recém criado
