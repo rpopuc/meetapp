@@ -7,6 +7,7 @@ import SessionController from './app/controllers/SessionController';
 import FileController from './app/controllers/FileController';
 import MeetupController from './app/controllers/MeetupController';
 import SubscriptionController from './app/controllers/SubscriptionController';
+import MeetupSearchController from './app/controllers/MeetupSearchController';
 
 // Obtém o middleware de autenticação
 import authMiddleware from './app/middlewares/auth';
@@ -46,5 +47,8 @@ routes.put('/meetups/:id', authMiddleware, MeetupController.update);
 
 // Inscrição em um meetup
 routes.post('/meetups/:id/subscriptions', authMiddleware, SubscriptionController.store);
+
+// Consulta de Meetups
+routes.get('/meetups/search', authMiddleware, MeetupSearchController.index);
 
 export default routes;
