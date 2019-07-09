@@ -193,6 +193,22 @@ curl --request DELETE \
   --header 'authorization: Bearer <token>'
 ```
 
+---
+
+`PUT`: `/meetups/:id`
+
+Atualiza os dados de um meetup futuro.
+
+```
+curl --request PUT \
+  --url http://localhost:3000/meetups/14 \
+  --header 'authorization: Bearer <token>' \
+  --header 'content-type: application/json' \
+  --data '{
+    "title": "Meetup de Teste"
+  }'
+```
+
 ## Desafio
 
 Esse projeto é a realização do desafio proposto no curso **Rocketseat - Bootcamp GoStack 2019**.

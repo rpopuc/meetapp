@@ -40,6 +40,7 @@ routes.get('/meetups', authMiddleware, MeetupController.index);
 // Cancelamento de meetups
 routes.delete('/meetups/:id', authMiddleware, MeetupController.delete);
 
-
+// Edição de meetup
+routes.put('/meetups/:id', authMiddleware, MeetupController.update);
 
 export default routes;

@@ -101,6 +101,38 @@ class MeetupController {
 
     return res.send({ok: true})
   }
+
+  /**
+   * Atualiza o meetup
+   */
+  async update(req, res) {
+    const meetup = await Meetup.findByPk(req.params.id);
+
+    if (!meetup) {
+      return res.status(404).json({error: 'Meetup not found.'})
+    }
+
+    if (meetup.user_id != req.userId) {
+      return res.status(401).json({error: 'Not authorized.'})
+    }
+
+    if (isBefore(meetup.date, new Date())) {
+      return res.status(400).json({ error: "Update past meetups is not permitted" });
+    }
+
+    // Efetua a alteração dos dados
+    await meetup.update(req.body);
+
+    // Retorna os dados do meetup
+    const { id, date, title, description, location } = meetup;
+    return res.json({
+      id,
+      date,
+      title,
+      description,
+      location,
+    });
+  }
 }
 
 export default new MeetupController();
